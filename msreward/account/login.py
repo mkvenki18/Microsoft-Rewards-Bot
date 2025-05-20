@@ -21,9 +21,10 @@ class MSRLogin:
     def log_in(self):
         logging.info(msg=f'Logging in {hide_email(self.email)}...')
         self._browser.get(URL_LOGIN)
-        time.sleep(0.5)
+        time.sleep(2)
 
         self._enter_email()
+        time.sleep(2)
         self._enter_password()
         if self.otp_secret:
             self._enter_otc()
@@ -40,7 +41,7 @@ class MSRLogin:
         logging.info(msg='Logging successful.')
 
     def _enter_email(self):
-        self._enter_login_screen_value('loginfmt', self.email, 'Sent Email Address.')
+        self._enter_login_screen_value('usernameEntry', self.email, 'Sent Email Address.')
 
     def _enter_password(self):
         self._enter_login_screen_value('passwd', self.pswd, 'Sent Password.')
@@ -70,11 +71,11 @@ class MSRLogin:
             raise FailToSignInException(f'Sign in is failed. Unable to switch to OTC verification method. No such option. All options are:\n{[x.text for x in verification_methods]}')
 
     def _enter_login_screen_value(self, ele_name, value, msg):
-        self._browser.wait_until_visible(By.NAME, ele_name, 10)
-        self._browser.send_key(By.NAME, ele_name, value)
+        self._browser.wait_until_visible(By.ID, ele_name, 10)
+        self._browser.send_key(By.ID, ele_name, value)
         logging.debug(msg=msg)
         time.sleep(0.5)
-        self._browser.send_key(By.NAME, ele_name, Keys.RETURN)
+        self._browser.send_key(By.ID, ele_name, Keys.RETURN)
         time.sleep(0.5)
 
     def sign_in_prompt(self):
