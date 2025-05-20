@@ -3,15 +3,22 @@ import zipfile
 import requests
 import env
 import shutil
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
+
+def get_driver_path():
+    """Returns the path to the auto-downloaded ChromeDriver."""
+    return ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()
 
 def update_driver():
-    os.remove("drivers/chromedriver.exe")
+   pass
 
 def download_driver(driver_path, system):
     r = requests.get(env.URL_CHROME_DRIVER_LATEST_RELEASE)
     latest_version = r.text
     if system == "Windows":
-        url = f'https://chromedriver.storage.googleapis.com/{latest_version}/chromedriver_win32.zip'
+        url = f'https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.94/win32/chrome-win32.zip'
     elif system == "Darwin":
         url = f'https://chromedriver.storage.googleapis.com/{latest_version}/chromedriver_mac64.zip'
     elif system == "Linux":

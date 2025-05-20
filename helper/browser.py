@@ -14,6 +14,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from helper.driver import download_driver
+from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.options import Options
+from helper.driver import get_driver_path 
 
 
 class Browser(Chrome):
@@ -21,16 +24,16 @@ class Browser(Chrome):
         self.mobile_mode = 'android' in user_agent.lower()
         self.user_agent = user_agent
 
-        path = Browser._prepare_driver()
+        path = get_driver_path()
 
         options = self._get_driver_options()
 
         if headless_mode:
             options.add_argument('--headless')
 
-        super().__init__(path, chrome_options=options)
+        super().__init__(executable_path=path, chrome_options=options)
 
-    @staticmethod
+    '''@staticmethod
     def _prepare_driver():
         os.makedirs('drivers', exist_ok=True)
         path = os.path.join('drivers', 'chromedriver')
@@ -39,7 +42,7 @@ class Browser(Chrome):
             path += ".exe"
         if not os.path.exists(path):
             download_driver(path, system)
-        return path
+        return path'''
 
     def _get_driver_options(self):
         options = Options()
