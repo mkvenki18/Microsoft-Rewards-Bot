@@ -1,0 +1,25 @@
+# Config files
+*.json
+email_links.txt
+
+# virtualenv
+venv/
+
+# Output artifacts
+drivers/
+logs/
+geckodriver.log
+
+# vscode
+.vscode/
+
+# cached python objects
+*.pyc
+*.pyo
+.DS_Store
+debug.log
+
+# Test
+test_*
+
+options/
