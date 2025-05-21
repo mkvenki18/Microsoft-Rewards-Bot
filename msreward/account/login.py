@@ -41,10 +41,13 @@ class MSRLogin:
         logging.info(msg='Logging successful.')
 
     def _enter_email(self):
-        self._enter_login_screen_value('usernameEntry', self.email, 'Sent Email Address.')
+        self.enter_login_screen_value('usernameEntry', self.email, 'Sent Email Address.')
 
     def _enter_password(self):
-        self._enter_login_screen_value('passwd', self.pswd, 'Sent Password.')
+        self.press_login_screen_button("span[role='button'][class*='fui-Link']", 'Click password option')
+        self.enter_login_screen_value('passwordEntry', self.pswd, 'Entered Password')
+        self.press_login_screen_button("button[data-testid='secondaryButton']", "Click 'Don't stay signed in' buttons")
+
 
     def _enter_otc(self):
         logging.debug(msg='OTC information is provided.')
@@ -70,13 +73,21 @@ class MSRLogin:
         else:
             raise FailToSignInException(f'Sign in is failed. Unable to switch to OTC verification method. No such option. All options are:\n{[x.text for x in verification_methods]}')
 
-    def _enter_login_screen_value(self, ele_name, value, msg):
+    def enter_login_screen_value(self, ele_name, value, msg):
         self._browser.wait_until_visible(By.ID, ele_name, 10)
         self._browser.send_key(By.ID, ele_name, value)
         logging.debug(msg=msg)
         time.sleep(0.5)
         self._browser.send_key(By.ID, ele_name, Keys.RETURN)
         time.sleep(0.5)
+    
+    def press_login_screen_button(self, ele_name, msg):
+        self._browser.wait_until_visible(By.CSS_SELECTOR, ele_name, 10)
+        self._browser.click_element(By.CSS_SELECTOR, ele_name)
+        logging.debug(msg=msg)
+        time.sleep(0.5)
+        
+    
 
     def sign_in_prompt(self):
         time.sleep(3)
