@@ -41,12 +41,18 @@ class MSRLogin:
         logging.info(msg='Logging successful.')
 
     def _enter_email(self):
+        self._browser.save_screenshot('logs/emailEntry.png')
         self.enter_login_screen_value('usernameEntry', self.email, 'Sent Email Address.')
 
     def _enter_password(self):
-        self.press_login_screen_button("span[role='button'][class*='fui-Link']", 'Click password option')
+        self._browser.save_screenshot('logs/EnterPassword.png')
+        #self.press_login_screen_button("span[role='button'][class*='fui-Link']", 'Click password option')
         self.enter_login_screen_value('passwordEntry', self.pswd, 'Entered Password')
-        self.press_login_screen_button("button[data-testid='secondaryButton']", "Click 'Don't stay signed in' buttons")
+        self._browser.save_screenshot('logs/staySignedIn.png')
+        self.press_login_screen_button("button[data-testid='secondaryButton']", "Click 'Don't stay signed in' buttons", "CSS")
+        self.press_login_screen_button("landing-page-dialog.close", "Click X Button", "ID")
+        time.sleep(2)
+        self._browser.save_screenshot('logs/MicrosoftLive.png')
 
 
     def _enter_otc(self):
@@ -81,12 +87,17 @@ class MSRLogin:
         self._browser.send_key(By.ID, ele_name, Keys.RETURN)
         time.sleep(0.5)
     
-    def press_login_screen_button(self, ele_name, msg):
-        self._browser.wait_until_visible(By.CSS_SELECTOR, ele_name, 10)
-        self._browser.click_element(By.CSS_SELECTOR, ele_name)
-        logging.debug(msg=msg)
-        time.sleep(0.5)
-        
+    def press_login_screen_button(self, ele_name, msg, type):
+        if type == "CSS":
+            self._browser.wait_until_visible(By.CSS_SELECTOR, ele_name, 10)
+            self._browser.click_element(By.CSS_SELECTOR, ele_name)
+            logging.debug(msg=msg)
+            time.sleep(0.5)
+        else:
+            self._browser.wait_until_visible(By.ID, ele_name, 15)
+            self._browser.click_element(By.ID, ele_name)
+            logging.debug(msg=msg)
+            time.sleep(0.5)
     
 
     def sign_in_prompt(self):
