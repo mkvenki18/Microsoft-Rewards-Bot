@@ -84,6 +84,7 @@ class MSRStats:
 
         self._browser.open_in_new_tab(env.URL_DASHBOARD)
         time.sleep(1)
+        self._browser.save_screenshot('logs/rewardsPage.png')
         
         if self._browser.click_element(By.XPATH, '//a[contains(@class, "signup-btn welcome")]', ignore_no_ele_exc=True):
             logging.debug('Welcome page detected.')

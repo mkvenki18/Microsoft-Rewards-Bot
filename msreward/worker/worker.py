@@ -22,6 +22,9 @@ class MSRWorker:
         if not summary.quiz_done:
             self._offer.do_offers()
     
+    def do_daily_set(self):
+        self._offer.do_daily_set()
+    
     def do_punchcard(self, summary: MSRStatsSummary):
         if len(summary.punch_card_incomplete_links) and not summary.punch_card_done:
             self._punchcard.do_punch_cards(summary.punch_card_incomplete_links)

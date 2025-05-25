@@ -36,13 +36,13 @@ class MSR:
             logging.info('Fail to initiate.')
             return
 
-        summary = self.account.get_summary(log=True)     
+        #summary = self.account.get_summary(log=True)     
         
-        if summary.all_done:
+        #if summary.all_done:
             logging.info(msg=f'{"Already done":-^33}')
             if flag_telegram:
                 telegram_update_post_search(self.account.email,summary)
-        else:
+        #else:
             try:
                 self._work(flag_pc, flag_mob, flag_quiz)
                 if flag_telegram:
@@ -53,23 +53,28 @@ class MSR:
                 if flag_telegram:
                     telegram_update_error(self.account.email)
 
-
+        try:
+                self._work(flag_pc, flag_mob, flag_quiz)
+                if flag_telegram:
+                    summary = self.account.get_summary(log=False)
+                    telegram_update_post_search(self.account.email,summary)
+        except Exception as e:
+                logging.error('', exc_info=True)
+                if flag_telegram:
+                    telegram_update_error(self.account.email)
         self._quit_browser()
 
     def _work(self, flag_pc: bool, flag_mob: bool, flag_quiz: bool) -> None:
         logging.info(msg=f'{"Work started":-^33}')
-        summary = self.account.summary
         if flag_quiz:
-            self.worker.do_offer(summary)
-            self.worker.do_punchcard(summary)
-        if flag_pc and not summary.pc_search_done:
-            self.worker.do_search(summary.num_of_pc_search_needed)
-        if flag_mob and not summary.mob_search_done:
+            self.worker.do_daily_set
+        if flag_pc :
+            self.worker.do_search()
+        if flag_mob :
             self._prep_mobile()
-            self.worker.do_search(summary.num_of_mobile_search_needed)
+            self.worker.do_search()
 
         logging.info(msg=f'{"Work finished":-^33}')
-        self.account.get_summary(log=True)
 
     def _prep_mobile(self) -> None:
         if self.browser:

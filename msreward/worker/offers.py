@@ -25,6 +25,18 @@ class MSROffer:
         self._browser.wait_until_visible(By.TAG_NAME, 'body', 10)  # checks for page load
         open_offers = self._browser.find_elements(By.XPATH, '//span[contains(@class, "mee-icon-AddMedium")]')
         logging.info(msg=f'Max attempt reached. Number of incomplete offers: {len(open_offers)}')
+    
+    
+    def do_daily_set(self):
+        daily_set = self._goto_dashboard_get_daily_set_links()
+        if not daily_set:
+            logging.info(msg='No more daily set found')
+            return 0
+        
+        for card in daily_set:
+            card.click()
+            logging.info(msg=card.aria_role + card.accessible_name)
+        return 1
 
     def _do_offers(self):
         offer_links = self._goto_dashboard_get_offer_links()
@@ -56,6 +68,14 @@ class MSROffer:
             offer.find_element(By.TAG_NAME, 'a')
             for offer in open_offers
         ]
+    
+    def _goto_dashboard_get_daily_set_links(self) -> list[WebElement]:
+        logging.info(msg='Starting Daily Set')
+        self._browser.get(env.URL_DASHBOARD)
+        time.sleep(5)
+        daily_set = self._browser.find_elements(By.XPATH, '//div[contains(@data-bi-id, "DailySet")]')
+        logging.info(msg=f'Daily Set Number: {len(daily_set)}')
+        return daily_set
 
     def _complete_sign_in_prompt(self):
         sign_in_prompt_msg = self._browser.find_elements(By.CLASS_NAME, 'simpleSignIn')

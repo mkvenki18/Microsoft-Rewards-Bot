@@ -29,16 +29,16 @@ class MSRLogin:
         if self.otp_secret:
             self._enter_otc()
         time.sleep(1)
-        self._click_i_look_good()
+        #self._click_i_look_good()
 
-        self._browser.click_element(By.XPATH, '//input[@type="submit"]', ignore_no_ele_exc=True)
-        self._browser.wait_until_visible(By.XPATH, '//*[@id="uhfLogo" or @id="microsoft"]', 10)
+        #self._browser.click_element(By.XPATH, '//input[@type="submit"]', ignore_no_ele_exc=True)
+        #self._browser.wait_until_visible(By.XPATH, '//*[@id="uhfLogo" or @id="microsoft"]', 10)
 
-        self._log_into_bing_mobile() if self._browser.mobile_mode else self._log_into_bing_pc()
+        #self._log_into_bing_mobile() if self._browser.mobile_mode else self._log_into_bing_pc()
+        #time.sleep(1)
+        #self._accept_bnp()
         time.sleep(1)
-        self._accept_bnp()
-        time.sleep(1)
-        logging.info(msg='Logging successful.')
+        logging.info(msg='Log In successful.')
 
     def _enter_email(self):
         self._browser.save_screenshot('logs/emailEntry.png')
@@ -115,6 +115,7 @@ class MSRLogin:
         self._browser.click_element(By.ID, 'id_l')
         time.sleep(0.1)
         self._browser.wait_until_clickable(By.ID, 'id_l', 5)
+        self._browser.save_screenshot('logs/bing.png')
 
     def _log_into_bing_mobile(self):
         self._browser.get(URL_BING_SEARCH)
@@ -132,3 +133,4 @@ class MSRLogin:
 
     def _click_i_look_good(self):
         self._browser.click_element(By.ID, 'iLooksGood', ignore_no_ele_exc=True)
+    
