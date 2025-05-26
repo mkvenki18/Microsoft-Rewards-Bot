@@ -35,7 +35,7 @@ class MSROffer:
         
         for card in daily_set:
             card.click()
-            logging.info(msg=card.aria_role + card.accessible_name)
+            logging.info(msg=f'{card.aria_role + card.accessible_name}')
         return 1
 
     def _do_offers(self):

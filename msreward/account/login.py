@@ -25,6 +25,7 @@ class MSRLogin:
 
         self._enter_email()
         time.sleep(2)
+        logging.info(msg="Entering Password")
         self._enter_password()
         if self.otp_secret:
             self._enter_otc()

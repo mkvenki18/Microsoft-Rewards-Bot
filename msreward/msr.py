@@ -59,7 +59,7 @@ class MSR:
                     summary = self.account.get_summary(log=False)
                     telegram_update_post_search(self.account.email,summary)
         except Exception as e:
-                logging.error('', exc_info=True)
+                logging.error('Error occurred, could not do quiz', exc_info=True)
                 if flag_telegram:
                     telegram_update_error(self.account.email)
         self._quit_browser()
@@ -67,7 +67,7 @@ class MSR:
     def _work(self, flag_pc: bool, flag_mob: bool, flag_quiz: bool) -> None:
         logging.info(msg=f'{"Work started":-^33}')
         if flag_quiz:
-            self.worker.do_daily_set
+            self.worker.do_daily_set()
         if flag_pc :
             self.worker.do_search()
         if flag_mob :
