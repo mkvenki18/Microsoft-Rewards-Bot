@@ -73,7 +73,7 @@ class MSROffer:
         logging.info(msg='Starting Daily Set')
         self._browser.get(env.URL_DASHBOARD)
         time.sleep(5)
-        daily_set = self._browser.find_elements(By.XPATH, '//div[contains(@data-bi-id, "DailySet")]')
+        daily_set = self._browser.find_elements(By.XPATH, '//div[contains(@data-bi-id, "DailySet") and @tabindex=0]')
         logging.info(msg=f'Daily Set Number: {len(daily_set)}')
         return daily_set
 
