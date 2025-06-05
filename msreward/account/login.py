@@ -50,7 +50,14 @@ class MSRLogin:
         #self.press_login_screen_button("span[role='button'][class*='fui-Link']", 'Click password option')
         self.enter_login_screen_value('passwordEntry', self.pswd, 'Entered Password')
         self._browser.save_screenshot('logs/staySignedIn.png')
-        self.press_login_screen_button("button[data-testid='secondaryButton']", "Click 'Don't stay signed in' buttons", "CSS")
+        try:
+            self.press_login_screen_button("button[data-testid='secondaryButton']", "Click 'Don't stay signed in' buttons", "CSS")
+        except Exception:
+            self._browser.refresh()
+            try:
+                self.press_login_screen_button("button[data-testid='secondaryButton']", "Click 'Don't stay signed in' buttons", "CSS")
+            except:
+                raise(FailToSignInException("Too Many Requests Error"))
         self.press_login_screen_button("landing-page-dialog.close", "Click X Button", "ID")
         time.sleep(2)
         self._browser.save_screenshot('logs/MicrosoftLive.png')

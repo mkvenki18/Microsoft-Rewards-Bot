@@ -68,6 +68,8 @@ class MSR:
         logging.info(msg=f'{"Work started":-^33}')
         if flag_quiz:
             self.worker.do_daily_set()
+            self.worker.do_offer()
+            self.worker.do_quiz()
         if flag_pc :
             self.worker.do_search()
         if flag_mob :
