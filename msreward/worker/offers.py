@@ -50,6 +50,7 @@ class MSROffer:
 
     def _do_quiz(self):
         self._browser.goto_latest_window()
+        logging.info(msg=f'{self._browser.current_url}')
         time.sleep(1.2)
         self._browser.wait_until_visible(By.ID, 'rqStartQuiz', 15)
         self._browser.click_element(By.ID, 'rqStartQuiz')
