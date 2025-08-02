@@ -1,5 +1,4 @@
 # Config files
-*.json
 email_links.txt
 
 # virtualenv
